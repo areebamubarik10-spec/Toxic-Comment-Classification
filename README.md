@@ -4,7 +4,7 @@
 
 This project develops a deep learning model to classify online comments into five toxicity categories using Natural Language Processing (NLP) and a Long Short-Term Memory (LSTM) neural network.
 
-The objective is to explore how deep learning can identify different forms of harmful language and support automated content moderation.
+The objective is to explore how deep learning can identify different forms of harmful language.
 
 ## Dataset
 
@@ -18,7 +18,10 @@ The original toxicity labels were converted into five mutually exclusive classes
 - Threat
 - Identity Attack
 
-After text cleaning and duplicate removal, 158,216 comments were retained.
+Priority order (each comment receives the first matching class):
+Identity Attack (identity_hate) > Severe Toxic > Threat > Toxic (toxic, obscene or insult) > Clean.
+
+After text cleaning, 25 empty comments and 1,330 duplicate comments were removed, leaving 158,216 comments.
 
 ## Technologies Used
 
@@ -54,9 +57,17 @@ The model was trained using the Adam optimizer, sparse categorical cross-entropy
 
 ## Results
 
-The model achieved **92.75% test accuracy** on 31,644 test samples, compared with an 89.8% majority-class baseline. The macro F1-score was **0.48**, indicating that performance varied across the five toxicity categories.
+The model achieved **92.75% test accuracy** on 31,644 test samples, compared with an 89.8% majority-class baseline. The macro F1-score was **0.48**, indicating that performance varied across the five categories.
 
-The model performed better on the Clean category, while detecting less frequent categories, particularly Threat and Identity Attack, remained challenging due to class imbalance.
+| Class | Precision | Recall | F1-score | Test samples |
+|---|---:|---:|---:|---:|
+| Clean | 0.981 | 0.961 | 0.971 | 28,427 |
+| Toxic | 0.582 | 0.696 | 0.634 | 2,627 |
+| Severe Toxic | 0.331 | 0.437 | 0.377 | 254 |
+| Identity Attack | 0.287 | 0.259 | 0.272 | 278 |
+| Threat | 0.132 | 0.121 | 0.126 | 58 |
+
+The model performed best on the Clean category. Detecting the less frequent categories, particularly Threat and Identity Attack, remained challenging, likely because of very few training samples and overlap between categories.
 
 Performance was evaluated using a classification report and confusion matrix.
 
@@ -66,7 +77,10 @@ The notebook also includes a prediction function that accepts user-entered text 
 
 ## Limitations
 
-The dataset is highly imbalanced, and overall accuracy does not fully reflect performance across all toxicity categories. Further improvements could focus on minority-class detection and model generalization.
+- The dataset is highly imbalanced, and overall accuracy does not fully reflect performance across the categories.
+- Threat detection is unreliable: in informal tests, a direct threat was assigned to Threat with only 30% confidence, and another was labelled Toxic.
+- The model is not suitable for real content moderation; rare classes have low precision and recall (Threat F1 0.13).
+- Results come from one saved run. Training is not seeded, so values may vary slightly between runs.
 
 ## What I Learned
 
