@@ -54,11 +54,11 @@ The model was trained using the Adam optimizer, sparse categorical cross-entropy
 
 ## Results
 
-The model achieved **92.75% test accuracy** on 31,644 test samples.
+The model achieved **92.75% test accuracy** on 31,644 test samples, compared with an 89.8% majority-class baseline. The macro F1-score was **0.48**, indicating that performance varied across the five toxicity categories.
+
+The model performed better on the Clean category, while detecting less frequent categories, particularly Threat and Identity Attack, remained challenging due to class imbalance.
 
 Performance was evaluated using a classification report and confusion matrix.
-
-The results showed strong performance on the Clean category, while minority classes, particularly Threat and Identity Attack, remained challenging due to class imbalance.
 
 ## Interactive Prediction
 
@@ -68,6 +68,14 @@ The notebook also includes a prediction function that accepts user-entered text 
 
 The dataset is highly imbalanced, and overall accuracy does not fully reflect performance across all toxicity categories. Further improvements could focus on minority-class detection and model generalization.
 
+## What I Learned
+
+- How to preprocess text data for NLP.
+- How to use tokenization and sequence padding for an LSTM model.
+- How class weighting can help address imbalanced datasets.
+- How to evaluate classification models using accuracy, precision, recall, F1-score, and a confusion matrix.
+- Why evaluating each class is important when working with imbalanced data.
+
 ## How to Run
 
 1. Download the Jigsaw Toxic Comment Classification dataset from Kaggle.
@@ -75,6 +83,13 @@ The dataset is highly imbalanced, and overall accuracy does not fully reflect pe
 3. Install the required Python libraries.
 4. Open the Jupyter Notebook.
 5. Run the cells sequentially to preprocess the data, train the model, and evaluate its performance.
+
+ ## Future Work
+
+- **Improve Minority-Class Detection:** Experiment with different class-weighting strategies and resampling techniques to improve the detection of less frequent toxicity categories.
+- **Model Improvement:** Explore Transformer-based models such as BERT to compare their performance with the current LSTM model.
+- **Deployment:** Plan to build an interactive web application using Streamlit so users can enter comments and view predicted toxicity categories.
+- **Further Evaluation:** Test the model on new comments to assess its ability to generalize to unseen text.
 
 ## Dataset Source
 
